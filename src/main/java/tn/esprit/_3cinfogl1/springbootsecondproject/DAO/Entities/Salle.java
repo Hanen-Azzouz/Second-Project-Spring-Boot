@@ -23,7 +23,7 @@ public class Salle implements Serializable {
     //Parent
     @ManyToOne
     Cinema cine;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     List<Film> filmsList;
 
 

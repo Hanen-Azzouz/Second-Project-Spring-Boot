@@ -155,10 +155,7 @@ public class Services implements IServices{
         salleDesaffectee.setCine(null);
         sallerepo.save(salleDesaffectee);
 
-
-
-
-    }
+      }
 
     @Override
     public void desaffecterFilmFromSalle(Long idFilm,Long idSalle) {
@@ -170,12 +167,32 @@ public class Services implements IServices{
 
     @Override
     public List<Film> recupererFilmParSalle(Long idSalle) {
-        return null;
+
+        /* Premiere solution
+        Salle s=sallerepo.findById(idSalle).get();
+        return s.getFilmsList();*/
+        //----------------------------------------------------------------------------------------------
+
+        //  Deuxieme solution avec SQL
+        return filmrepo.recuprerFilmsBySalleSQL(idSalle);
+        //----------------------------------------------------------------------------------------------
+        /* on ne peut pas implementer avec keyword ou JPQL car on n'a pas un attribut qui nous relie
+        avec la classe salle */
     }
 
     @Override
     public Film ajouterFilmEtAffecterAuneSalle(Film f, String nom) {
-        return null;
+
+        //Apres récuperation de l'objet on identifie le parent
+       Salle salleAaffectee=sallerepo.getSalleByNom(nom);// parent salle
+
+        /* Affectation du child film a la salle ,on a utilisé cette façon car on utilise cascade on affecte un film
+        //à la salle  il sera ajouté automatiquement  dans table film */
+
+        salleAaffectee.getFilmsList().add(f);
+        sallerepo.save(salleAaffectee);
+        return f;
+
     }
 
 

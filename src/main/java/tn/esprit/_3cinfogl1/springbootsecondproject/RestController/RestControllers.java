@@ -35,12 +35,12 @@ public class RestControllers {
     {
       return iServicesRest.findAllCinema();
     }
-    @GetMapping("Afficher_le_Cinema_By_ID ")
+    @GetMapping("AfficherleCinemaByID")
     Cinema findCinemaById(@RequestParam Long id){
         return iServicesRest.findCinemaById(id);
     }
      @DeleteMapping("Supprimer_un_Cinema_By_ID/{id}")
-    void supprimerCinemaById(@PathVariable Long id){
+    void supprimerCinemaById(@PathVariable("id") Long id){
         iServicesRest.deleteCinema(id);
 
   }
@@ -58,8 +58,6 @@ public class RestControllers {
     }
 
     //Méthode avec SQL
-
-
       @GetMapping("Afficher_Cinema_By_Adresse_SQL")
      List<Cinema> getCinemaByAdresseSQL(@RequestParam String adresse){
         return iServicesRest.getCinemaByAdresseSQL(adresse);
@@ -80,12 +78,12 @@ public class RestControllers {
         return iServicesRest.findAllFilms();
     }
 
-    @GetMapping("Afficher_le_Film_By_ID ")
-    Film findFilmById(@RequestParam Long id) {
+    @GetMapping("Afficher_le_Film_By_ID/{id}")
+    Film findFilmById(@PathVariable("id") Long id) {
     return iServicesRest.findFilmById(id);
     }
     @DeleteMapping("Supprimer_un_Film_By_ID/{id}")
-    void supprimerFilmById(@PathVariable Long id) {
+    void supprimerFilmById(@PathVariable("id") Long id) {
 
       iServicesRest.deleteFilm(id);
     }
@@ -148,4 +146,13 @@ public class RestControllers {
        iServicesRest.desaffecterFilmFromSalle(idFilm,idSalle);
     }
 
+       @GetMapping("Recuperer_Film_par_Salle")
+       List<Film> recupererFilmParSalle(@RequestParam Long idSalle){
+        return iServicesRest.recupererFilmParSalle(idSalle);
+       }
+
+       @PostMapping("Ajouter_Film_Et_Affecter_Salle")
+       Film ajouterFilmEtAffecterAuneSalle(@RequestParam Film f,@RequestParam String nom){
+        return iServicesRest.ajouterFilmEtAffecterAuneSalle(f,nom);
+       }
 }
